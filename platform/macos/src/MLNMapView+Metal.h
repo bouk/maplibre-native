@@ -40,5 +40,5 @@ public:
   void display() override;
 
 private:
-  bool presentsWithTransaction = false;
+  bool presentsWithTransaction = true;
 };
