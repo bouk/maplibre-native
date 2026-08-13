@@ -95,7 +95,10 @@ private:
 
     MTL::CullMode currentCullMode = MTL::CullModeNone;
     MTL::Winding currentWinding = MTL::WindingClockwise;
-    MTL::ScissorRect currentScissorRect;
+    // No scissor is encoded until the first setScissorRect call, so this
+    // holds no meaningful value until scissorRectSet is true.
+    MTL::ScissorRect currentScissorRect = {0, 0, 0, 0};
+    bool scissorRectSet = false;
 
     size_t width;
     size_t height;

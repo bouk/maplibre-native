@@ -223,8 +223,9 @@ void RenderPass::setFrontFacingWinding(const MTL::Winding winding) {
 }
 
 void RenderPass::setScissorRect(MTL::ScissorRect rect) {
-    if (rect.x != currentScissorRect.x || rect.y != currentScissorRect.y || rect.width != currentScissorRect.width ||
-        rect.height != currentScissorRect.height) {
+    if (!scissorRectSet || rect.x != currentScissorRect.x || rect.y != currentScissorRect.y ||
+        rect.width != currentScissorRect.width || rect.height != currentScissorRect.height) {
+        scissorRectSet = true;
         if (rect.width + rect.x > width) {
             rect.width = width - rect.x;
         }
