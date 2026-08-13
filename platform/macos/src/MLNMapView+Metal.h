@@ -41,6 +41,8 @@ public:
 
   void drawableSizeChanged(CGSize size);
 
+  void backingPropertiesChanged() override;
+
 private:
   bool presentsWithTransaction = true;
 };

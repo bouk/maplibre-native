@@ -142,6 +142,18 @@ void MLNMapViewMetalImpl::drawableSizeChanged(CGSize drawableSize) {
   size = {static_cast<uint32_t>(drawableSize.width), static_cast<uint32_t>(drawableSize.height)};
 }
 
+void MLNMapViewMetalImpl::backingPropertiesChanged() {
+  auto& resource = getResource<MLNMapViewMetalRenderableResource>();
+  const CGFloat scale = mapView.window.backingScaleFactor;
+  if (!resource.mtlView || scale <= 0) {
+    return;
+  }
+  resource.mtlView.layer.contentsScale = scale;
+  const CGSize bounds = resource.mtlView.bounds.size;
+  resource.mtlView.drawableSize =
+      CGSizeMake(std::round(bounds.width * scale), std::round(bounds.height * scale));
+}
+
 MLNMapViewMetalImpl::~MLNMapViewMetalImpl() = default;
 
 void MLNMapViewMetalImpl::activate() {
