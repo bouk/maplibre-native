@@ -37,6 +37,7 @@ public:
 
   mbgl::PremultipliedImage readStillImage() override;
   MLNBackendResource* getObject() override;
+  void display() override;
 
 private:
   bool presentsWithTransaction = false;

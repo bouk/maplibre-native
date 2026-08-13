@@ -122,7 +122,8 @@ MLNMapViewMetalImpl::MLNMapViewMetalImpl(MLNMapView* nativeView_)
   resource.mtlView.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
   resource.mtlView.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
   resource.mtlView.layer.opaque = mapView.opaque;
-  resource.mtlView.enableSetNeedsDisplay = NO;
+  resource.mtlView.paused = YES;
+  resource.mtlView.enableSetNeedsDisplay = YES;
   CAMetalLayer* metalLayer = MLN_OBJC_DYNAMIC_CAST(resource.mtlView.layer, CAMetalLayer);
   metalLayer.presentsWithTransaction = presentsWithTransaction;
 
@@ -157,6 +158,11 @@ void MLNMapViewMetalImpl::updateAssumedState() {
 mbgl::PremultipliedImage MLNMapViewMetalImpl::readStillImage() {
   // return readFramebuffer(mapView.framebufferSize); // TODO: RendererBackend::readFramebuffer
   return {};
+}
+
+void MLNMapViewMetalImpl::display() {
+  auto& resource = getResource<MLNMapViewMetalRenderableResource>();
+  resource.mtlView.needsDisplay = YES;
 }
 
 MLNBackendResource* MLNMapViewMetalImpl::getObject() {
